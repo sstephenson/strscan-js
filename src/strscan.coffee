@@ -31,13 +31,16 @@
     @source.slice @head
 
   getPreMatch: ->
-    @source.slice 0, @head - 1 if @match
+    @source.slice 0, @head - @match.length if @match
 
   getMatch: ->
     @match
 
   getPostMatch: ->
-    @source.slice @head + @match.length - 1 if @match
+    @source.slice @head if @match
+
+  getCapture: (index) ->
+    @captures[index]
 
   scanChar: ->
     @scan /./

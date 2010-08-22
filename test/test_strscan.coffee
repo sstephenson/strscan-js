@@ -14,6 +14,15 @@ ok not s.getPostMatch()
 ok s.getRemainder() is s.getSource()
 ok s.scan(/Fri /)
 
+s = new StringScanner "Fri Dec 12 1975 14:39"
+ok s.scan(/(\w+) (\w+) (\d+) /) is "Fri Dec 12 "
+ok s.getMatch() is "Fri Dec 12 "
+ok s.getCapture(0) is "Fri"
+ok s.getCapture(1) is "Dec"
+ok s.getCapture(2) is "12"
+ok s.getPostMatch() is "1975 14:39"
+ok s.getPreMatch() is ""
+
 s = new StringScanner "test string"
 ok not s.hasTerminated()
 s.scan /test/
