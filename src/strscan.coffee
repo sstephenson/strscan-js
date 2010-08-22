@@ -54,7 +54,7 @@
   scanUntil: (regexp) ->
     if matches = regexp.exec @getRemainder()
       @set head: @head + matches.index + matches[0].length, last: @head, match: matches[0], captures: matches.slice 1
-      @getPreMatch() + @match
+      @source.slice @last, @head
     else
       @set match: null
 

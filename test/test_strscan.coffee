@@ -68,6 +68,11 @@ ok s.scanUntil(/1/) is "Fri Dec 1"
 ok s.getPreMatch() is "Fri Dec "
 ok not s.scanUntil(/XYZ/)
 
+s = new StringScanner "abaabaaab"
+ok s.scanUntil(/b/) is "ab"
+ok s.scanUntil(/b/) is "aab"
+ok s.scanUntil(/b/) is "aaab"
+
 s = new StringScanner "test string"
 ok s.skip(/\w+/) is 4
 ok not s.skip(/\w+/)
