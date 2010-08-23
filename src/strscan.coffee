@@ -10,6 +10,8 @@
 # distributed via [npm](http://npm.mape.me/) as a [CommonJS 
 # module](http://www.commonjs.org/).
 #
+# [Clone, fork, or file bugs at GitHub](http://github.com/sstephenson/strscan-js).
+#
 #### Quick start
 # -------------------------------------------------------------------------
 #

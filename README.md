@@ -33,7 +33,9 @@ module](http://www.commonjs.org/).
 
 ### More
 
-[http://github.com/sstephenson/strscan-js/](http://github.com/sstephenson/strscan-js/)
+[Clone, fork, or file bugs at GitHub](http://github.com/sstephenson/strscan-js)
+
+[Read the full documentation/annotated source code](http://sstephenson.github.com/strscan-js/)
 
 ### Copyright
 
