@@ -1,26 +1,39 @@
-# **StringScanner** is a simple string tokenizer that provides lexical
-# scanning operations on a string. It's a JavaScript port of the
-# [Ruby library with the same name](http://ruby-doc.org/core/classes/StringScanner.html).
+# **StringScanner** is a simple string tokenizer that provides for lexical
+# scanning operations on a string. It's a JavaScript port of the [Ruby 
+# library with the same name](http://ruby-doc.org/core/classes/StringScanner.html).
 #
 # Scanning a string means keeping track of and advancing a position (a
 # zero-based index into the source string) and matching regular expressions
 # against the portion of the source string after the position.
+#
+# StringScanner is written in [CoffeeScript](http://coffeescript.org/) and
+# distributed via [npm](http://npm.mape.me/) as a [CommonJS 
+# module](http://www.commonjs.org/).
+#
+#### Quick start
+# -------------------------------------------------------------------------
+#
+#     $ npm install strscan
+#     $ node-repl
+#     > var StringScanner = require("strscan").StringScanner
+#     > var s = new StringScanner("This is a test")
+#     > s.scan(/\w+/)             # => "This"
+#     > s.scan(/\w+/)             # => null
+#     > s.scan(/\s+/)             # => " "
+#     > s.scan(/\s+/)             # => null
+#     > s.scan(/\w+/)             # => "is"
+#     > s.hasTerminated()         # => false
+#     > s.scan(/\s+/)             # => " "
+#     > s.scan(/(\w+)\s+(\w+)/)   # => "a test"
+#     > s.getMatch()              # => "a test"
+#     > s.getCapture(0)           # => "a"
+#     > s.getCapture(1)           # => "test"
+#     > s.hasTerminated()         # => true
 
-# To get started, create a new `StringScanner` with a source string.
-#     s = new StringScanner("This is a test")
-#     s.scan(/\w+/)             # => "This"
-#     s.scan(/\w+/)             # => null
-#     s.scan(/\s+/)             # => " "
-#     s.scan(/\s+/)             # => null
-#     s.scan(/\w+/)             # => "is"
-#     s.hasTerminated()         # => false
-#
-#     s.scan(/\s+/)             # => " "
-#     s.scan(/(\w+)\s+(\w+)/)   # => "a test"
-#     s.getCapture(0)           # => "a"
-#     s.getCapture(1)           # => "test"
-#     s.hasTerminated()         # => true
-#
+#### Creating a scanner
+# -------------------------------------------------------------------------
+
+# Create a new `StringScanner` with a source string.
 (exports ? this).StringScanner = class StringScanner
   constructor: (source) ->
     @source = source.toString()
@@ -192,7 +205,6 @@
 
 
 ##### Private methods
-# -------------------------------------------------------------------------
 
   # Sets the state of the scanner (for internal use only).
   setState: (matches, values) ->
