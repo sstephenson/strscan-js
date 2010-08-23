@@ -1,0 +1,11 @@
+{ "name": "strscan"
+, "description": "Simple string tokenizer for lexical scanning operations"
+, "author": "Sam Stephenson"
+, "version": "1.0.0"
+, "licenses": [
+  { "type": "MIT"
+  , "url": "http://github.com/sstephenson/strscan-js/raw/master/LICENSE"
+  }]
+, "directories": { "lib": "./lib" }
+, "main": "./lib/strscan"
+}
