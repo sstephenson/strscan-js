@@ -2,9 +2,9 @@
 # scanning operations on a string. It's a JavaScript port of the
 # [Ruby library with the same name](http://ruby-doc.org/core/classes/StringScanner.html).
 #
-# Scanning a string means keeping track of a position (a zero-based index
-# into the source string) and matching regular expressions against the
-# portion of the source string after the position.
+# Scanning a string means keeping track of and advancing a position (a
+# zero-based index into the source string) and matching regular expressions
+# against the portion of the source string after the position.
 
 # To get started, create a new `StringScanner` with a source string.
 #     s = new StringScanner("This is a test")
@@ -46,9 +46,9 @@
       @setState []
 
   # Matches `regexp` at _or after_ the current position. Returns the
-  # portion of the source string up to and including the end of the match
-  # and advances the scanner's position, or returns `null` if there is no
-  # match.
+  # portion of the source string after the scanner's position up to and
+  # including the end of the match and advances the scanner's position,
+  # or returns `null` if there is no match.
   scanUntil: (regexp) ->
     if matches = regexp.exec @getRemainder()
       @setState matches,
@@ -77,7 +77,29 @@
 
 
 #### Looking ahead
+# The `check`, `checkUntil` and `peek` methods look for matching strings
+# without advancing the scanner's position.
 # -------------------------------------------------------------------------
+
+  # Checks to see if `regexp` can be matched at the current position and
+  # returns the matched string without advancing the scanner's position, or
+  # returns `null` if there is no match.
+  check: (regexp) ->
+    if (matches = regexp.exec @getRemainder()) and matches.index is 0
+      @setState matches
+    else
+      @setState []
+
+  # Checks to see if `regexp` can be matched at _or after_ the current
+  # position. Returns the portion of the source string after the current
+  # position up to and including the end of the match without advancing the
+  # scanner's position, or returns `null` if there is no match.
+  checkUntil: (regexp) ->
+    if matches = regexp.exec @getRemainder()
+      @setState matches
+      @source.slice @head, @head + matches.index + matches[0].length
+    else
+      @setState []
 
   # Returns the next `length` characters after the current position. If
   # called without a `length`, returns the next character. The scanner's

@@ -25,9 +25,9 @@
  scanning operations on a string. It&rsquo;s a JavaScript port of the
  <a href="http://ruby-doc.org/core/classes/StringScanner.html">Ruby library with the same name</a>.</p>
 
-<p> Scanning a string means keeping track of a position (a zero-based index
- into the source string) and matching regular expressions against the
- portion of the source string after the position.</p>
+<p> Scanning a string means keeping track of and advancing a position (a
+ zero-based index into the source string) and matching regular expressions
+ against the portion of the source string after the position.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre></pre></div>
@@ -105,9 +105,9 @@
           <a class="octothorpe" href="#section-5">#</a>
         </div>
         <p> Matches <code>regexp</code> at <em>or after</em> the current position. Returns the
- portion of the source string up to and including the end of the match
- and advances the scanner&rsquo;s position, or returns <code>null</code> if there is no
- match.</p>
+ portion of the source string after the scanner&rsquo;s position up to and
+ including the end of the match and advances the scanner&rsquo;s position,
+ or returns <code>null</code> if there is no match.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>  <span class="n">scanUntil</span><span class="p">:</span> <span class="p">(</span><span class="n">regexp</span><span class="p">)</span> <span class="o">-&gt;</span>
@@ -168,6 +168,9 @@
         </div>
         <h3>Looking ahead</h3>
 
+<p> The <code>check</code>, <code>checkUntil</code> and <code>peek</code> methods look for matching strings
+ without advancing the scanner&rsquo;s position.</p>
+
 <hr />
       </td>
       <td class=code>
@@ -179,6 +182,42 @@
         <div class="octowrap">
           <a class="octothorpe" href="#section-10">#</a>
         </div>
+        <p> Checks to see if <code>regexp</code> can be matched at the current position and
+ returns the matched string without advancing the scanner&rsquo;s position, or
+ returns <code>null</code> if there is no match.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="n">check</span><span class="p">:</span> <span class="p">(</span><span class="n">regexp</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">matches</span> <span class="o">=</span> <span class="n">regexp</span><span class="o">.</span><span class="n">exec</span> <span class="vi">@getRemainder</span><span class="p">())</span> <span class="ow">and</span> <span class="n">matches</span><span class="o">.</span><span class="n">index</span> <span class="n">is</span> <span class="mi">0</span>
+      <span class="vi">@setState</span> <span class="n">matches</span>
+    <span class="k">else</span>
+      <span class="vi">@setState</span> <span class="o">[]</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-11'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-11">#</a>
+        </div>
+        <p> Checks to see if <code>regexp</code> can be matched at <em>or after</em> the current
+ position. Returns the portion of the source string after the current
+ position up to and including the end of the match without advancing the
+ scanner&rsquo;s position, or returns <code>null</code> if there is no match.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="n">checkUntil</span><span class="p">:</span> <span class="p">(</span><span class="n">regexp</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="n">matches</span> <span class="o">=</span> <span class="n">regexp</span><span class="o">.</span><span class="n">exec</span> <span class="vi">@getRemainder</span><span class="p">()</span>
+      <span class="vi">@setState</span> <span class="n">matches</span>
+      <span class="vi">@source</span><span class="o">.</span><span class="n">slice</span> <span class="vi">@head</span><span class="p">,</span> <span class="vi">@head</span> <span class="o">+</span> <span class="n">matches</span><span class="o">.</span><span class="n">index</span> <span class="o">+</span> <span class="n">matches</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">length</span>
+    <span class="k">else</span>
+      <span class="vi">@setState</span> <span class="o">[]</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-12'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-12">#</a>
+        </div>
         <p> Returns the next <code>length</code> characters after the current position. If
  called without a <code>length</code>, returns the next character. The scanner&rsquo;s
  position is not advanced.</p>
@@ -188,10 +227,10 @@
     <span class="vi">@source</span><span class="o">.</span><span class="n">substr</span> <span class="vi">@head</span><span class="p">,</span> <span class="n">length</span> <span class="p">?</span> <span class="mi">1</span></pre></div>
       </td>
     </tr>
-    <tr id='section-11'>
+    <tr id='section-13'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-11">#</a>
+          <a class="octothorpe" href="#section-13">#</a>
         </div>
         <h3>Accessing scanner data</h3>
 
@@ -205,10 +244,10 @@
         <div class='highlight'><pre></pre></div>
       </td>
     </tr>
-    <tr id='section-12'>
+    <tr id='section-14'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-12">#</a>
+          <a class="octothorpe" href="#section-14">#</a>
         </div>
         <p> Returns the scanner&rsquo;s source string.</p>
       </td>
@@ -217,10 +256,10 @@
     <span class="vi">@source</span></pre></div>
       </td>
     </tr>
-    <tr id='section-13'>
+    <tr id='section-15'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-13">#</a>
+          <a class="octothorpe" href="#section-15">#</a>
         </div>
         <p> Returns the portion of the source string from the scanner&rsquo;s position
  onward.</p>
@@ -230,10 +269,10 @@
     <span class="vi">@source</span><span class="o">.</span><span class="n">slice</span> <span class="vi">@head</span></pre></div>
       </td>
     </tr>
-    <tr id='section-14'>
+    <tr id='section-16'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-14">#</a>
+          <a class="octothorpe" href="#section-16">#</a>
         </div>
         <p> Returns the scanner&rsquo;s position. In the <em>reset</em> position, this value is
  zero. In the <em>terminated</em> position, this value is the length of the
@@ -244,10 +283,10 @@
     <span class="vi">@head</span></pre></div>
       </td>
     </tr>
-    <tr id='section-15'>
+    <tr id='section-17'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-15">#</a>
+          <a class="octothorpe" href="#section-17">#</a>
         </div>
         <p> Checks to see if the scanner has reached the end of the string.</p>
       </td>
@@ -256,10 +295,10 @@
     <span class="vi">@head</span> <span class="n">is</span> <span class="vi">@source</span><span class="o">.</span><span class="n">length</span></pre></div>
       </td>
     </tr>
-    <tr id='section-16'>
+    <tr id='section-18'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-16">#</a>
+          <a class="octothorpe" href="#section-18">#</a>
         </div>
         <h3>Accessing match data</h3>
 
@@ -272,10 +311,10 @@
         <div class='highlight'><pre></pre></div>
       </td>
     </tr>
-    <tr id='section-17'>
+    <tr id='section-19'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-17">#</a>
+          <a class="octothorpe" href="#section-19">#</a>
         </div>
         <p> Returns the portion of the source string leading up to, but not
  including, the most recent match. (Returns <code>null</code> if there is no recent
@@ -286,10 +325,10 @@
     <span class="vi">@source</span><span class="o">.</span><span class="n">slice</span> <span class="mi">0</span><span class="p">,</span> <span class="vi">@head</span> <span class="o">-</span> <span class="vi">@match</span><span class="o">.</span><span class="n">length</span> <span class="k">if</span> <span class="vi">@match</span></pre></div>
       </td>
     </tr>
-    <tr id='section-18'>
+    <tr id='section-20'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-18">#</a>
+          <a class="octothorpe" href="#section-20">#</a>
         </div>
         <p> Returns the most recently matched portion of the source string (or
  <code>null</code> if there is no recent match).</p>
@@ -299,10 +338,10 @@
     <span class="vi">@match</span></pre></div>
       </td>
     </tr>
-    <tr id='section-19'>
+    <tr id='section-21'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-19">#</a>
+          <a class="octothorpe" href="#section-21">#</a>
         </div>
         <p> Returns the portion of the source string immediately following the most
  recent match. (Returns <code>null</code> if there is no recent match.)</p>
@@ -312,10 +351,10 @@
     <span class="vi">@source</span><span class="o">.</span><span class="n">slice</span> <span class="vi">@head</span> <span class="k">if</span> <span class="vi">@match</span></pre></div>
       </td>
     </tr>
-    <tr id='section-20'>
+    <tr id='section-22'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-20">#</a>
+          <a class="octothorpe" href="#section-22">#</a>
         </div>
         <p> Returns the <code>index</code>th capture from the most recent match (or <code>null</code> if
  there is no recent match).</p>
@@ -325,10 +364,10 @@
     <span class="vi">@captures</span><span class="o">[</span><span class="n">index</span><span class="o">]</span></pre></div>
       </td>
     </tr>
-    <tr id='section-21'>
+    <tr id='section-23'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-21">#</a>
+          <a class="octothorpe" href="#section-23">#</a>
         </div>
         <h3>Modifying the scanner&rsquo;s state</h3>
 
@@ -341,10 +380,10 @@
         <div class='highlight'><pre></pre></div>
       </td>
     </tr>
-    <tr id='section-22'>
+    <tr id='section-24'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-22">#</a>
+          <a class="octothorpe" href="#section-24">#</a>
         </div>
         <p> Resets the scanner back to its original position and clears its match
  data.</p>
@@ -354,10 +393,10 @@
     <span class="vi">@setState</span> <span class="o">[]</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">last</span><span class="p">:</span> <span class="mi">0</span></pre></div>
       </td>
     </tr>
-    <tr id='section-23'>
+    <tr id='section-25'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-23">#</a>
+          <a class="octothorpe" href="#section-25">#</a>
         </div>
         <p> Advances the scanner position to the end of the string and clears its
  match data.</p>
@@ -367,10 +406,10 @@
     <span class="vi">@setState</span> <span class="o">[]</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="vi">@source</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="n">last</span><span class="p">:</span> <span class="vi">@head</span></pre></div>
       </td>
     </tr>
-    <tr id='section-24'>
+    <tr id='section-26'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-24">#</a>
+          <a class="octothorpe" href="#section-26">#</a>
         </div>
         <p> Appends <code>string</code> to the scanner&rsquo;s source string. The scanner&rsquo;s position
  is not affected.</p>
@@ -380,10 +419,10 @@
     <span class="vi">@source</span> <span class="o">+=</span> <span class="n">string</span></pre></div>
       </td>
     </tr>
-    <tr id='section-25'>
+    <tr id='section-27'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-25">#</a>
+          <a class="octothorpe" href="#section-27">#</a>
         </div>
         <p> Sets the scanner&rsquo;s position to its previous position and clears its
  match data. Only one previous position is stored. Throws an exception
@@ -397,10 +436,10 @@
       <span class="kp">throw</span> <span class="s2">&quot;nothing to unscan&quot;</span></pre></div>
       </td>
     </tr>
-    <tr id='section-26'>
+    <tr id='section-28'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-26">#</a>
+          <a class="octothorpe" href="#section-28">#</a>
         </div>
         <h4>Private methods</h4>
 
@@ -410,10 +449,10 @@
         <div class='highlight'><pre></pre></div>
       </td>
     </tr>
-    <tr id='section-27'>
+    <tr id='section-29'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-27">#</a>
+          <a class="octothorpe" href="#section-29">#</a>
         </div>
         <p> Sets the state of the scanner (for internal use only).</p>
 

@@ -97,3 +97,16 @@ try
   raised = false
 catch e
 ok raised
+
+s = new StringScanner "Fri Dec 12 1975 14:39"
+ok s.check(/Fri/) is "Fri"
+ok s.getPosition() is 0
+ok s.getMatch() is "Fri"
+ok not s.check(/12/)
+ok not s.getMatch()
+
+s = new StringScanner "Fri Dec 12 1975 14:39"
+ok s.checkUntil(/12/) is "Fri Dec 12"
+ok s.getPosition() is 0
+ok s.getMatch() is "12"
+
