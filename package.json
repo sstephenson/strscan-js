@@ -8,4 +8,8 @@
   }]
 , "directories": { "lib": "./lib" }
 , "main": "./lib/strscan"
+, "repository":
+  { "type": "git"
+  , "url": "http://github.com/sstephenson/strscan-js.git"
+  }
 }
