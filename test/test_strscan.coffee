@@ -42,8 +42,10 @@ ok s.scanChar() is "a"
 ok s.scanChar() is "b"
 ok not s.scanChar()
 
-s = new StringScanner "☃"
+s = new StringScanner "☃\n1"
 ok s.scanChar() is "☃"
+ok s.scanChar() is "\n"
+ok s.scanChar() is "1"
 ok not s.scanChar()
 
 s = new StringScanner "test string"
@@ -109,4 +111,3 @@ s = new StringScanner "Fri Dec 12 1975 14:39"
 ok s.checkUntil(/12/) is "Fri Dec 12"
 ok s.getPosition() is 0
 ok s.getMatch() is "12"
-

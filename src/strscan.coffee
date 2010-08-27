@@ -1,5 +1,5 @@
 # **StringScanner** is a simple string tokenizer that provides for lexical
-# scanning operations on a string. It's a JavaScript port of the [Ruby 
+# scanning operations on a string. It's a JavaScript port of the [Ruby
 # library with the same name](http://ruby-doc.org/core/classes/StringScanner.html).
 #
 # Scanning a string means keeping track of and advancing a position (a
@@ -7,7 +7,7 @@
 # against the portion of the source string after the position.
 #
 # StringScanner is written in [CoffeeScript](http://coffeescript.org/) and
-# distributed via [npm](http://npm.mape.me/) as a [CommonJS 
+# distributed via [npm](http://npm.mape.me/) as a [CommonJS
 # module](http://www.commonjs.org/).
 #
 # [Clone, fork, or file bugs at GitHub](http://github.com/sstephenson/strscan-js).
@@ -44,7 +44,7 @@
 
 #### Scanning for matches
 # The `scan`, `scanUntil`, `scanChar`, `skip`, and `skipUntil` methods look
-# for matching strings and advance the scanner's position. The _scan_ 
+# for matching strings and advance the scanner's position. The _scan_
 # methods return the matched string; the _skip_ methods return the number
 # of characters by which the scan position advanced.
 # -------------------------------------------------------------------------
@@ -75,7 +75,7 @@
 
   # Scans one character, returns it, and advances the scanner's position.
   scanChar: ->
-    @scan /./
+    @scan /[\s\S]/
 
   # Skips over the given `regexp` at the current position. Returns the
   # length of the matched string and advances the scanner's position, or
